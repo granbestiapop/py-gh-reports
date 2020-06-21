@@ -1,0 +1,25 @@
+<html>
+
+<body>
+  {% for m in milestones %}
+  <h1>Aviso de deploy testrelease ({{m.repository_name}})</h1>
+  <section>
+    <h2>
+      Changelog
+      <a href="{{m.url}}">(Milestone v{{m.title}})</a>
+    </h2>
+    <ul>
+      {% for p in m.pull_requests %}
+      <li>
+        <a href="{{p.permalink}}">
+          {{p.title}}
+        </a>
+        (<a href="{{p.author.url}}">@{{p.author.login}}</a>)
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+</body>
+
+</html>
