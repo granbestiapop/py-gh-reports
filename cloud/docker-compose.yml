@@ -1,0 +1,13 @@
+version: '3'
+services:
+  api:
+    image: "leokraken/py-reports:latest"
+    container_name: py-reports
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pyreports.rule=Host(`pyreports.api.granbestiapop.com`)"
+      - "traefik.http.routers.pyreports.entrypoints=websecure"
+      - "traefik.http.routers.pyreports.tls.certresolver=myresolver"
+    ports:
+      - "5000:5000"
+    network_mode: bridge
