@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reports</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <style>
       .crab-image{
         width: 100px;
@@ -122,9 +123,18 @@
     </form>
   {% else %}
     <h1 class="title">Authenticate Github</h1>
-    <a
-    href="https://github.com/login/oauth/authorize?client_id=bbee70838dd11f9be5dc&redirect_uri=http://localhost:5000/reports/callback&scope=ser,public_repo,repo,repo_deployment,repo:status,read:repo_hook,read:org,read:public_key,read:gpg_key">Github</a>
+    <form method="GET" action="https://github.com/login/oauth/authorize">
+      <input type="hidden" name="redirect_uri" value="http://localhost:5000/reports/callback"/>
+      <input type="hidden" name="client_id" value="bbee70838dd11f9be5dc"/>
+      <input type="hidden" name="scope" value="ser,public_repo,repo,repo_deployment,repo:status,read:repo_hook,read:org,read:public_key,read:gpg_key">
 
+      <button type="submit" class="button is-large">
+        <span class="icon is-medium">
+          <i class="fab fa-github"></i>
+        </span>
+        <span>GitHub</span>
+      </button>
+    </form>
   {% endif %}
   </section>
 </body>

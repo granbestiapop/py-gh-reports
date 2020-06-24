@@ -2,6 +2,7 @@ import hashlib
 from addict import Dict
 import re
 
+milestone_regex = re.compile(r"https://github.com/(.*)/(.*)/milestone/(\d*)")
 
 def process_data(data):
   return [transform_repository(Dict(data['data'][key])) for key in data['data']]
@@ -21,8 +22,7 @@ def transform_repository(repository):
 
 
 def extract_url_info(url):
-  p = re.compile(r"https://github.com/(.*)/(.*)/milestone/(\d*)")
-  m = p.match(url)
+  m = milestone_regex.match(url)
   if m is None:
     return None
 
