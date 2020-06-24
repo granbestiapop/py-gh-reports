@@ -3,8 +3,12 @@ import json
 import chevron
 import os
 
-client_id = os.environ['GITHUB_CLIENT']
-client_secret = os.environ['GITHUB_CLIENT_SECRET']
+import sys
+sys.path.append("..")
+from utils.config import get_github_client, get_github_client_secret
+
+client_id = get_github_client()
+client_secret = get_github_client_secret()
 
 def get_data_from_github(token, milestones):
   url = "https://api.github.com/graphql"
