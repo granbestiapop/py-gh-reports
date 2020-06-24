@@ -124,7 +124,6 @@
   {% else %}
     <h1 class="title">Authenticate Github</h1>
     <form method="GET" action="https://github.com/login/oauth/authorize">
-      <input type="hidden" name="redirect_uri" value="http://localhost:5000/reports/callback"/>
       <input type="hidden" name="client_id" value="bbee70838dd11f9be5dc"/>
       <input type="hidden" name="scope" value="ser,public_repo,repo,repo_deployment,repo:status,read:repo_hook,read:org,read:public_key,read:gpg_key">
 
