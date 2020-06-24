@@ -11,3 +11,12 @@ services:
     ports:
       - "5000:5000"
     network_mode: bridge
+    secrets:
+      - github_client
+      - github_client_secret
+
+secrets:
+   github_client:
+     file: github_client.txt
+   github_client_secret:
+     file: github_client_secret.txt
