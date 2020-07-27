@@ -9,15 +9,22 @@ services:
       - "traefik.http.routers.pyreports.entrypoints=websecure"
       - "traefik.http.routers.pyreports.tls.certresolver=myresolver"
       - "traefik.http.middlewares.pyreports.redirectscheme.scheme=https"
+      - "traefik.docker.network=traefik-template_traefik-net"
     ports:
       - "5000:5000"
     network_mode: bridge
     secrets:
       - github_client
       - github_client_secret
+    networks:
+      - traefik-template_traefik-net
 
 secrets:
    github_client:
      file: github_client.txt
    github_client_secret:
      file: github_client_secret.txt
+networks:
+   traefik-template_traefik-net:
+     external:
+       name: traefik-template_traefik-net
