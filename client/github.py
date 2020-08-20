@@ -52,7 +52,7 @@ def create_query(milestones):
             dueOn
             state
             url
-            pullRequests(last:20) {
+            pullRequests(last:50) {
               nodes {
                 id
                 state
