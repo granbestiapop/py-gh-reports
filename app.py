@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, make_response, redirect
 import service.milestone as milestone_service
 import service.github as github_service
 
+
 def create_app():
     app = Flask(__name__)
 
@@ -10,13 +11,14 @@ def create_app():
     def reports():
         uid = request.cookies.get('uid')
         token = request.args.get('token')
-        if token == None:
+        if not token:
             token = uid
         milestones = request.args.get('milestones')
         title = request.args.get('title')
         # Parse milestone query param
         milestones = milestone_service.milestone_info(milestones)
-        data = github_service.get_milestones(token=token, milestones=milestones)
+        data = github_service.get_milestones(
+            token=token, milestones=milestones)
         # Prepare data for template engine
         template_data = milestone_service.process_template_data(data, title)
         return render_template('index.html', milestones=template_data['milestones'], title=template_data['title'])
@@ -33,11 +35,8 @@ def create_app():
     @app.route('/reports/callback')
     def reports_callback():
         code = request.args.get('code')
-        # Get user data access token
-        user_data = github_service.get_user_token(code)
-        token = user_data['access_token']
-
-        # Send logged to home
+        token = github_service.get_user_token(code)
+        # Redirect and set cookie
         resp = make_response(redirect('/home'))
         resp.set_cookie('uid', token)
         return resp
