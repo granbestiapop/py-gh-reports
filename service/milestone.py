@@ -5,8 +5,18 @@ import re
 milestone_regex = re.compile(r"https://github.com/(.*)/(.*)/milestone/(\d*)")
 
 
-def process_data(data):
-    return [transform_repository(Dict(data['data'][key])) for key in data['data']]
+def process_template_data(data, title):
+    return {
+        'milestones': [transform_repository(Dict(data['data'][key])) for key in data['data']],
+        'title': get_title_or_default(title)
+    }
+
+
+def get_title_or_default(title):
+    print(title)
+    if title is None:
+        return "Subida programada"
+    return title
 
 
 def transform_repository(repository):
