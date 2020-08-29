@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, make_response, redirect
 
-from client.github import get_data_from_github, get_user_token
-from service.milestone import process_template_data, milestone_info
-
+import service.milestone as milestone_service
+import service.github as github_service
 
 def create_app():
     app = Flask(__name__)
@@ -16,10 +15,10 @@ def create_app():
         milestones = request.args.get('milestones')
         title = request.args.get('title')
         # Parse milestone query param
-        params = milestone_info(milestones)
-        data = get_data_from_github(token=token, milestones=params)
+        milestones = milestone_service.milestone_info(milestones)
+        data = github_service.get_milestones(token=token, milestones=milestones)
         # Prepare data for template engine
-        template_data = process_template_data(data, title)
+        template_data = milestone_service.process_template_data(data, title)
         return render_template('index.html', milestones=template_data['milestones'], title=template_data['title'])
 
     @app.route('/health')
@@ -35,7 +34,7 @@ def create_app():
     def reports_callback():
         code = request.args.get('code')
         # Get user data access token
-        user_data = get_user_token(code)
+        user_data = github_service.get_user_token(code)
         token = user_data['access_token']
 
         # Send logged to home

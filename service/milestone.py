@@ -13,8 +13,7 @@ def process_template_data(data, title):
 
 
 def get_title_or_default(title):
-    print(title)
-    if title is None:
+    if not title:
         return "Subida programada"
     return title
 
